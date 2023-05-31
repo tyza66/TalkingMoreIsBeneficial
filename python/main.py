@@ -14,19 +14,19 @@ app = FastAPI(title="GPT聊天接口")
 def qa(text: str = None, q_text: str = None):
     result = question_answerer({'question': q_text, 'context': text})
     result = result['answer']
-    return {"code": 200, "result": result}
+    return result
 
 @app.get("/tg", summary='文本生成', tags=['文本相关'])
 def qa(text: str = None):
     result = textGenerator(text)
-    return {"code": 200, "result": result}
+    return result
 
 @app.get("/use", summary='问答并生成', tags=['文本相关'])
 def qa(text: str = None, q_text: str = None):
     result = question_answerer({'question': q_text, 'context': text})
     result = result['answer']
     result = textGenerator(result)
-    return {"code": 200, "result": result}
+    return result
 
 if __name__ == '__main__':
     uvicorn.run("main:app", host='0.0.0.0', port=8000)

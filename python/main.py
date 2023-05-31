@@ -8,7 +8,7 @@ question_answerer = pipeline('question-answering')
 #文本生成
 textGenerator = pipeline("text-generation")
 
-app = FastAPI(title="抱抱脸接口")
+app = FastAPI(title="GPT聊天接口")
 
 @app.get("/qa", summary='文本问答', tags=['文本相关'])
 def qa(text: str = None, q_text: str = None):

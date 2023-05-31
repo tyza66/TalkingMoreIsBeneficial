@@ -33,6 +33,8 @@ public class UserController {
         return end;
     }
 
+
+    //整个get的方法查询一下测一下好不好使
     @Get
     @Mapping("/all")
     public JSON all(){

@@ -10,15 +10,15 @@ import java.io.IOException;
 @Controller
 public class TalkController {
     @Get
-    @Mapping("/")
+    @Mapping("talkByNone")
     public String talkByNone(){
-        
+
             try {
                 String s = HttpUtils.http("localhost:8000").get();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        return s;
+        return "";
 
     }
 }

@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="58a56390-9189-45a2-9a5e-5038126d64cc" name="默认" comment="">
+      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../java/talk/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../java/talk/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../java/talk/src/main/java/com/tyza66/talk/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/../java/talk/src/main/java/com/tyza66/talk/App.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -224,7 +224,7 @@
       <updated>1685233618701</updated>
       <workItem from="1685493532884" duration="118000" />
       <workItem from="1685493661610" duration="677000" />
-      <workItem from="1685495922053" duration="3412000" />
+      <workItem from="1685495922053" duration="4011000" />
     </task>
     <servers />
   </component>

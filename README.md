@@ -13,7 +13,7 @@
 
 ##### 使用技术
 
-- python后端：transformers、fastapi、vicorn
-- java后端：solon、solon-web、lombok、httputils、hutool
+- python后端：Transformers、Fastapi、Vicorn
+- java后端：Solon、Solon-web、Lombok、Httputils、Hutool、Wood
 
 By：tyza66(洮羱芝闇)

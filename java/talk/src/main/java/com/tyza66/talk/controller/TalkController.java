@@ -32,5 +32,5 @@ public class TalkController {
         return end;
     }
 
-    
+
 }

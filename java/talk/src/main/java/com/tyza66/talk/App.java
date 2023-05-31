@@ -1,6 +1,8 @@
 package com.tyza66.talk;
 
+import org.noear.snack.ONode;
 import org.noear.solon.Solon;
+import org.noear.wood.WoodConfig;
 
 /**
  * Author: tyza66
@@ -9,6 +11,13 @@ import org.noear.solon.Solon;
  **/
 public class App {
     public static void main(String[] args) {
-        Solon.start(App.class,args);
+        Solon.start(App.class, args, (app) -> {
+            if (Solon.cfg().isDebugMode() || Solon.cfg().isFilesMode()) {
+                //执行后打印sql
+                WoodConfig.onExecuteAft(cmd -> {
+                    System.out.println("[Wood]" + cmd.text + "\r\n" + cmd.paramMap());
+                });
+            }
+        });
     }
 }

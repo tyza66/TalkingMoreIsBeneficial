@@ -7,7 +7,7 @@
 <img src="./效果/登录.png"/>
 </details>
 <details><summary>无上文聊天</summary>
-<img src="./效果/2.png"/>
+<img src="./效果/5.png"/>
 </details>
 <details><summary>有上文聊天</summary>
 <img src="./效果/4.png."/>

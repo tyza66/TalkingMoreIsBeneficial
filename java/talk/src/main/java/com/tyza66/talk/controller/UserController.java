@@ -4,6 +4,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.json.JSON;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.tyza66.talk.pojo.Message;
 import com.tyza66.talk.pojo.User;
 import com.tyza66.talk.service.UserService;
 import org.noear.solon.annotation.*;

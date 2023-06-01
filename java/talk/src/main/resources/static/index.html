@@ -274,6 +274,7 @@
                         window.location.href = './login.html'
                     }
                 })
+                window.sessionStorage.setItem("context", "")
             },
             methods: {
                 changeMode(mode) {
@@ -283,6 +284,7 @@
                         this.mode2 = ""
                         this.mode3 = ""
                         this.context = false
+                        window.sessionStorage.setItem("context", "")
                         this.$message({
                             message: '无上文模式',
                             type: 'success'
@@ -292,6 +294,7 @@
                         this.mode2 = "active"
                         this.mode3 = ""
                         this.context = true
+                        window.sessionStorage.setItem("context", "")
                         this.$message({
                             message: '有上文模式',
                             type: 'success'
@@ -301,15 +304,14 @@
                         this.mode2 = ""
                         this.mode3 = "active"
                         this.context = true
+                        window.sessionStorage.setItem("context", "")
                         this.$message({
                             message: '回答增强的有上文模式',
                             type: 'success'
                         });
                     }
-                },
-                load() {
-                    this.count += 2
-                }, send() {
+                }, 
+                send() {
                     if (this.say == "") {
                         return
                     }
@@ -318,6 +320,9 @@
                         if (res.data.status == 200) {
                             this.talk.push(["ai", res.data.msg])
                             this.messageButtom()
+                            if (this.context) {
+                                window.sessionStorage.setItem("context", window.sessionStorage.getItem("context") + " " + this.say.replace('you', "my").replace('You', "My").replace('your', "my").replace('Your', "My").replace('yours', "mine").replace('Yours', "Mine"))
+                            }
                         } else if (res.data.status == 201) {
                             this.talk.push(["ai", "权限不足，请先登录"])
                             this.messageButtom()

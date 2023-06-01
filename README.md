@@ -17,6 +17,7 @@
 - Solon与Mysql交互中间件使用Wood
 - 使用Sa-Token鉴权
 - 模板引擎使用Thymeleaf
+- 切换模式的时候会清空上下文记忆
 
 ##### 使用技术
 

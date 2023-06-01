@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="58a56390-9189-45a2-9a5e-5038126d64cc" name="默认" comment="">
       <change beforePath="$PROJECT_DIR$/../java/talk/src/main/resources/static/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/../java/talk/src/main/resources/static/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../java/talk/target/classes/com/tyza66/talk/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../java/talk/target/classes/com/tyza66/talk/controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../java/talk/target/classes/static/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/../java/talk/target/classes/static/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

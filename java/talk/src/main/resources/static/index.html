@@ -14,6 +14,7 @@
         * {
             padding: 0;
             margin: 0;
+            box-sizing: border-box;
         }
 
         .title {
@@ -26,7 +27,7 @@
         }
 
         .left {
-            height: 580px;
+            height: 570px;
         }
 
         .right {
@@ -34,8 +35,13 @@
             border-left: 0px;
         }
 
+        .right .top {
+            height: 30px;
+            border-bottom: 1px solid #ccc;
+        }
+
         .right .talkbody {
-            height: 500px;
+            height: 470px;
         }
 
         .right .text {
@@ -93,6 +99,97 @@
         .input-field:focus+.input-label+.input-highlight {
             width: 100%;
         }
+
+        .tab {
+            width: 90%;
+            height: 50px;
+            border: 1px solid #ccc;
+            margin: 0 auto;
+            margin-top: 10px;
+            border-radius: 15px;
+            cursor: pointer;
+        }
+
+        .tab p {
+            text-align: center;
+            line-height: 50px;
+        }
+
+        .loading-wave {
+            width: 150px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            transform: scale(0.1, 0.1);
+            margin-left: -50px;
+        }
+
+        .loading-bar {
+            width: 20px;
+            height: 10px;
+            margin: 0 5px;
+            background-color: #3498db;
+            border-radius: 5px;
+            animation: loading-wave-animation 1s ease-in-out infinite;
+        }
+
+        .loading-bar:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .loading-bar:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        .loading-bar:nth-child(4) {
+            animation-delay: 0.3s;
+        }
+
+        @keyframes loading-wave-animation {
+            0% {
+                height: 10px;
+            }
+
+            50% {
+                height: 50px;
+            }
+
+            100% {
+                height: 10px;
+            }
+        }
+
+        .loader {
+            margin-left: 0;
+            height: 30px;
+            width: 300px;
+            display: inline-block;
+        }
+
+        .active {
+            background-color: aliceblue;
+        }
+        .talkbody{
+            overflow:auto;
+        }
+        .talkbody .in{
+            width: 90%;
+            margin: 0 auto;
+        }
+        .infinite-list-item{
+            width: 100%;
+            margin-top: 5px;
+            padding: 12px;
+            border-radius: 10px;
+            line-height: 1.5rem;
+        }
+        .ai{
+            background-color: #3498db85;
+        }
+        .user{
+            background-color: #a0a2a385;
+        }
     </style>
 </head>
 
@@ -105,14 +202,38 @@
             <el-main>
                 <el-row>
                     <el-col :span="4" class="one">
-                        <div class="left"></div>
+                        <div class="left">
+                            <div class="tab" :class="mode1" @click="changeMode('无上文模式')">
+                                <p>无上文模式</p>
+                            </div>
+                            <div class="tab" :class="mode2" @click="changeMode('有上文模式')">
+                                <p>有上文模式</p>
+                            </div>
+                            <div class="tab" :class="mode3" @click="changeMode('回答增强模式')">
+                                <p>回答增强模式</p>
+                            </div>
+                        </div>
                     </el-col>
                     <el-col :span="20" class="one">
                         <div class="right">
-                            <div class="talkbody"></div>
+                            <div class="top">
+                                <div class="loader">
+                                    <div class="loading-wave">
+                                        <div class="loading-bar"></div>
+                                        <div class="loading-bar"></div>
+                                        <div class="loading-bar"></div>
+                                        <div class="loading-bar"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="talkbody">
+                                <ul class="infinite-list in"  style="overflow:auto">
+                                    <li class="infinite-list-item" v-for="(item,index) in talk" :class="item[0]">{{item[1]}}</li>
+                                </ul>
+                            </div>
                             <div class="text">
                                 <div class="input-container">
-                                    <input placeholder="在此输入内容，按回车发送" class="input-field" type="text">
+                                    <input v-model="say" placeholder="在此输入内容，按回车发送" class="input-field" type="text" @keydown.enter="send()">
                                     <label for="input-field" class="input-label">正在输入内容 按回车发送</label>
                                     <span class="input-highlight"></span>
                                 </div>
@@ -120,6 +241,8 @@
                         </div>
                     </el-col>
                 </el-row>
+                <a href="https://github.com/tyza66/TalkingMoreIsBeneficial" align="center"
+                    style="margin-top: 5px; font-size: 5px;">Github开源地址</a>
             </el-main>
         </el-container>
     </div>
@@ -128,7 +251,13 @@
             el: '#app',
             data: function () {
                 return {
-
+                    mode: "无上文模式",
+                    mode1: "active",
+                    mode2: "",
+                    mode3:"",
+                    count: 0,
+                    say: "",
+                    talk: [["ai","Hello, I am an AI chat robot based on the GPT2 language model. \"Speaking more is beneficial.\" You can chat with me through the input box below. I am produced by tyza66 and open-source on https://github.com/tyza66/TalkingMoreIsBeneficial . You can only communicate with me in English ."]],
                 }
             },
             created: function () {
@@ -139,7 +268,40 @@
                 })
             },
             methods: {
-
+                changeMode(mode) {
+                    this.mode = mode
+                    if (mode == "无上文模式") {
+                        this.mode1 = "active"
+                        this.mode2 = ""
+                        this.mode3 = ""
+                    } else if (mode == "有上文模式") {
+                        this.mode1 = ""
+                        this.mode2 = "active"
+                        this.mode3 = ""
+                    } else if (mode == "回答增强模式") {
+                        this.mode1 = ""
+                        this.mode2 = ""
+                        this.mode3 = "active"
+                    }
+                },
+                load() {
+                    this.count += 2
+                },send(){
+                    if(this.say==""){
+                        return
+                    }
+                    this.talk.push(["user",this.say])
+                    axios.get("./talkByNone?q="+this.say).then(function(res){
+                        if(res.data.status==200){
+                            this.talk.push(["ai",res.data.msg])
+                        }else if(res.data.status==201){
+                            this.talk.push(["ai","权限不足，请先登录"])
+                        }else{
+                            this.talk.push(["ai","服务器出错了，请稍后再试"])
+                        }
+                    }.bind(this))
+                    this.say=""
+                }
             }
         })
     </script>

@@ -44,7 +44,7 @@ public class TalkController {
     public JSON talk(@Body Message message){
         String text = message.getMessage();
         text = text.replace("&", "");
-        String time = "The current time is" +message.getTime();
+        String time = "The current time is " +message.getTime();
         text = text + " " + time;
         String q = message.getQuestion();
         q = q.replace("&", "");

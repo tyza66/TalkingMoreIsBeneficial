@@ -258,7 +258,7 @@
             el: '#app',
             data: function () {
                 return {
-                    mode: "无上文模式",
+                    mode: 1,
                     mode1: "active",
                     mode2: "",
                     mode3: "",
@@ -274,65 +274,156 @@
                         window.location.href = './login.html'
                     }
                 })
+                window.sessionStorage.setItem("context", "")
             },
             methods: {
                 changeMode(mode) {
                     this.mode = mode
                     if (mode == "无上文模式") {
+                        this.mode = 1
                         this.mode1 = "active"
                         this.mode2 = ""
                         this.mode3 = ""
                         this.context = false
+                        window.sessionStorage.setItem("context", "")
                         this.$message({
                             message: '无上文模式',
                             type: 'success'
                         });
+                        this.talk=[["ai", "Hello, I am an AI chat robot based on the GPT2 language model. \"Speaking more is beneficial.\" You can chat with me through the input box below. I am produced by tyza66 and open-source on https://github.com/tyza66/TalkingMoreIsBeneficial . You can only communicate with me in English ."]]
                     } else if (mode == "有上文模式") {
+                        this.mode = 2
                         this.mode1 = ""
                         this.mode2 = "active"
                         this.mode3 = ""
                         this.context = true
+                        window.sessionStorage.setItem("context", "")
                         this.$message({
                             message: '有上文模式',
                             type: 'success'
                         });
+                        this.talk=[["ai", "Hello, I am an AI chat robot based on the GPT2 language model. \"Speaking more is beneficial.\" You can chat with me through the input box below. I am produced by tyza66 and open-source on https://github.com/tyza66/TalkingMoreIsBeneficial . You can only communicate with me in English ."]]
                     } else if (mode == "回答增强模式") {
+                        this.mode = 3
                         this.mode1 = ""
                         this.mode2 = ""
                         this.mode3 = "active"
                         this.context = true
+                        window.sessionStorage.setItem("context", "")
                         this.$message({
                             message: '回答增强的有上文模式',
                             type: 'success'
                         });
+                        this.talk=[["ai", "Hello, I am an AI chat robot based on the GPT2 language model. \"Speaking more is beneficial.\" You can chat with me through the input box below. I am produced by tyza66 and open-source on https://github.com/tyza66/TalkingMoreIsBeneficial . You can only communicate with me in English ."]]
                     }
                 },
-                load() {
-                    this.count += 2
-                }, send() {
+                send() {
                     if (this.say == "") {
                         return
                     }
-                    this.talk.push(["user", this.say])
-                    axios.get("./talkByNone?q=" + this.say).then(function (res) {
-                        if (res.data.status == 200) {
-                            this.talk.push(["ai", res.data.msg])
-                            this.messageButtom()
-                        } else if (res.data.status == 201) {
-                            this.talk.push(["ai", "权限不足，请先登录"])
-                            this.messageButtom()
-                        } else {
+                    if (this.mode == 1) {
+                        this.talk.push(["user", this.say])
+                        var now = this.say
+                        axios.get("./talkByNone?q=" + this.say).then(function (res) {
+                            if (res.data.status == 200) {
+                                this.talk.push(["ai", res.data.msg])
+                                this.messageButtom()
+                                if (this.context) {
+                                    window.sessionStorage.setItem("context", window.sessionStorage.getItem("context") + " " + now.replace('you', "my").replace('You', "My").replace('your', "my").replace('Your', "My").replace('yours', "mine").replace('Yours', "Mine"))
+                                }
+                            } else if (res.data.status == 201) {
+                                this.talk.push(["ai", "权限不足，请先登录"])
+                                this.messageButtom()
+                            } else {
+                                this.talk.push(["ai", "服务器出错了，请稍后再试"])
+                                this.messageButtom()
+                            }
+                        }.bind(this)).catch(function (err) {
                             this.talk.push(["ai", "服务器出错了，请稍后再试"])
                             this.messageButtom()
-                        }
-                    }.bind(this))
-                    this.say = ""
+                        }.bind(this))
+                        this.say = ""
+                    } else if (this.mode == 2) {
+                        var dd = new Date();
+                        var fullYear = dd.getFullYear();
+                        var month = dd.getMonth()
+                        var date = dd.getDate()
+                        var hours = dd.getHours()
+                        var minutes = dd.getMinutes()
+                        var seconds = dd.getSeconds()
+                        var dataStr = fullYear + "-" + this.convert(month + 1) + "-" + this.convert(date) + "-" + hours + "-" + this.convert(minutes) + "-" + this.convert(seconds);
+                        this.talk.push(["user", this.say])
+                        if (this.context) {
+                                    window.sessionStorage.setItem("context", window.sessionStorage.getItem("context") + " " + this.say.replace('you', "my").replace('You', "I").replace('your', "my").replace('Your', "My").replace('yours', "mine").replace('Yours', "Mine"))
+                                }
+                        axios.post("./talk", {
+                            "message": window.sessionStorage.getItem("context"),
+                            "question": this.say,
+                            "time": dataStr
+                        }).then(function (res) {
+                            console.log(res)
+                            if (res.data.status == 200) {
+                                this.talk.push(["ai", res.data.msg])
+                                this.messageButtom()
+                            } else if (res.data.status == 201) {
+                                this.talk.push(["ai", "权限不足，请先登录"])
+                                this.messageButtom()
+                            } else {
+                                this.talk.push(["ai", "服务器出错了，请稍后再试"])
+                                this.messageButtom()
+                            }
+                        }.bind(this)).catch(function (err) {
+                            this.talk.push(["ai", "服务器出错了，请稍后再试"])
+                            this.messageButtom()
+                        }.bind(this))
+                        this.say = ""
+                    }else if (this.mode == 3) {
+                        var dd = new Date();
+                        var fullYear = dd.getFullYear();
+                        var month = dd.getMonth()
+                        var date = dd.getDate()
+                        var hours = dd.getHours()
+                        var minutes = dd.getMinutes()
+                        var seconds = dd.getSeconds()
+                        var dataStr = fullYear + "-" + this.convert(month + 1) + "-" + this.convert(date) + "-" + hours + "-" + this.convert(minutes) + "-" + this.convert(seconds);
+                        this.talk.push(["user", this.say])
+                        if (this.context) {
+                                    window.sessionStorage.setItem("context", window.sessionStorage.getItem("context") + " " + this.say.replace('you', "my").replace('You', "I").replace('your', "my").replace('Your', "My").replace('yours', "mine").replace('Yours', "Mine"))
+                                }
+                        axios.post("./use", {
+                            "message": window.sessionStorage.getItem("context"),
+                            "question": this.say,
+                            "time": dataStr
+                        }).then(function (res) {
+                            console.log(res)
+                            if (res.data.status == 200) {
+                                this.talk.push(["ai", res.data.msg])
+                                this.messageButtom()
+                            } else if (res.data.status == 201) {
+                                this.talk.push(["ai", "权限不足，请先登录"])
+                                this.messageButtom()
+                            } else {
+                                this.talk.push(["ai", "服务器出错了，请稍后再试"])
+                                this.messageButtom()
+                            }
+                        }.bind(this)).catch(function (err) {
+                            this.talk.push(["ai", "服务器出错了，请稍后再试"])
+                            this.messageButtom()
+                        }.bind(this))
+                        this.say = ""
+                    }
                     this.messageButtom()
                 }, messageButtom() {
                     this.$nextTick(() => {
                         let scrollEl = this.$refs.messages;
                         scrollEl.scrollTo({ top: scrollEl.scrollHeight, behavior: 'smooth' });
                     });
+                }, convert(time) {
+                    if (time < 10) {
+                        return "0" + time;
+                    } else {
+                        return time;
+                    }
                 }
 
             }

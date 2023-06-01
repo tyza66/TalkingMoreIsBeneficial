@@ -1,5 +1,6 @@
 package com.tyza66.talk.controller;
 
+import cn.dev33.satoken.stp.StpUtil;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Get;
 import org.noear.solon.annotation.Mapping;
@@ -15,7 +16,13 @@ public class RouteController {
     @Get
     @Mapping("/")
     public void index(Context ctx){
-        ctx.redirect("./index.html");
+        boolean login = StpUtil.isLogin();
+        if(login){
+            ctx.redirect("./index.html");
+        }else{
+            ctx.redirect("./login.html");
+        }
+
     }
 
     @Get

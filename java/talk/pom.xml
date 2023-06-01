@@ -59,11 +59,11 @@
         </dependency>
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solon.auth</artifactId>
+            <artifactId>solon.view.thymeleaf</artifactId>
         </dependency>
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solon.view.thymeleaf</artifactId>
+            <artifactId>sa-token-solon-plugin</artifactId>
         </dependency>
     </dependencies>
 

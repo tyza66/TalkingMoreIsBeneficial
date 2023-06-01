@@ -1,5 +1,6 @@
 package com.tyza66.talk.controller;
 
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.json.JSON;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
@@ -20,6 +21,7 @@ public class UserController {
         try {
             boolean login = userService.login(username, password);
             if (login) {
+                StpUtil.login(96);
                 end.set("status","200");
                 end.set("msg","登录成功");
             } else {
@@ -44,6 +46,21 @@ public class UserController {
         }catch (Exception e) {
             end.set("status","500");
             end.set("msg","获取失败");
+        }
+        return end;
+    }
+
+    @Get
+    @Mapping("/logined")
+    public JSON logined(){
+        JSONObject end = JSONUtil.createObj();
+        boolean all = StpUtil.hasPermission("all");
+        if (all) {
+            end.set("status","200");
+            end.set("msg","已登录");
+        } else {
+            end.set("status","500");
+            end.set("msg","未登录");
         }
         return end;
     }

@@ -1,5 +1,6 @@
 package com.tyza66.talk;
 
+import cn.dev33.satoken.SaManager;
 import org.noear.snack.ONode;
 import org.noear.solon.Solon;
 import org.noear.wood.WoodConfig;
@@ -19,5 +20,6 @@ public class App {
                 });
             }
         });
+        System.out.println("启动成功：Sa-Token配置如下：" + SaManager.getConfig());
     }
 }

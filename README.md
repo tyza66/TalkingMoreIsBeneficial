@@ -11,12 +11,12 @@
 - 聊天机器人不可联网只是在本地根据上下文知识库进行回答
 - 前端使用非前后端分离的vue搭建
 - Solon与Mysql交互中间件使用Wood
-- 使用Auth鉴权
+- 使用sa-token鉴权
 - 模板引擎使用Thymeleaf
 
 ##### 使用技术
 
 - Python后端：Transformers、Fastapi、Vicorn
-- Java后端：Solon、Solon-web、Lombok、Httputils、Hutool、Wood、Auth、thymeleaf
+- Java后端：Solon、Solon-web、Lombok、Httputils、Hutool、Wood、sa-token、thymeleaf
 
 By：tyza66(洮羱芝闇)

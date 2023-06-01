@@ -11,14 +11,35 @@
     <script src="./js/eindex.js"></script>
     <script src="./js/axios.min.js"></script>
     <style>
-        *{
+        * {
             padding: 0;
             margin: 0;
         }
-        .header{
-            width: 100%;
-            height: 60px;
-            background-color: rgba(255, 245, 232, 0.99);
+
+        .container {
+            justify-content: center;
+            margin-top: 150px;
+            flex-direction: column;
+            width: 500px;
+            margin: 0 auto;
+            margin-top: 40px;
+        }
+
+        .container h3 {
+            text-align: center;
+            font-size: 30px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .container p {
+            font-size: 20px;
+            font-weight: 10;
+            line-height: 30px;
+        }
+
+        .p2 {
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -26,9 +47,20 @@
 <body>
     <div id="app">
         <el-container>
-            <el-header><div class="header"></div></el-header>
+            <el-header>
+
+            </el-header>
             <el-main>
-                用户登录
+                <el-container class="container">
+                    <h3>用户登录</h3>
+                    <el-form ref="form" :model="form" label-width="80px">
+                        <p>账号</p>
+                        <el-input v-model="form.username" placeholder="账号"></el-input>
+                        <p class="p2">密码</p>
+                        <el-input v-model="form.password" placeholder="密码"></el-input>
+                    </el-form>
+                    <el-button type="primary" @click="login()" style="margin-top: 20px;">登录</el-button>
+                </el-container>
             </el-main>
         </el-container>
     </div>
@@ -37,10 +69,32 @@
             el: '#app',
             data: function () {
                 return {
-
+                    form: {
+                        username: '',
+                        password: ''
+                    }
                 }
-            }, methods: {
-
+            },
+            methods: {
+                login() {
+                    axios.post('./login', {
+                        username: this.form.username,
+                        password: this.form.password
+                    }).then(res => {
+                        if (res.data.status == 200) {
+                            this.$message({
+                                message: '登陆成功',
+                                type: 'success'
+                            });
+                            window.location.href = './index.html'
+                        } else {
+                            this.$message({
+                                message: '登录失败',
+                                type: 'warning'
+                            });
+                        }
+                    })
+                }
             }
         })
     </script>

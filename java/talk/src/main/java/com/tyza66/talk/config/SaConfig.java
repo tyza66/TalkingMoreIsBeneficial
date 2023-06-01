@@ -16,7 +16,7 @@ public class SaConfig implements StpInterface {
     public List<String> getPermissionList(Object loginId, String loginType) {
         // 本list仅做模拟，实际项目中要根据具体业务逻辑来查询权限
         List<String> list = new ArrayList<String>();
-        if(loginId.equals(96)){
+        if(loginId.equals("96")){
             list.add("all");
         }
 
@@ -30,8 +30,9 @@ public class SaConfig implements StpInterface {
     public List<String> getRoleList(Object loginId, String loginType) {
         // 本list仅做模拟，实际项目中要根据具体业务逻辑来查询角色
         List<String> list = new ArrayList<String>();
-        list.add("admin");
-        list.add("super-admin");
+        if ((int)loginId == 96) {
+            list.add("all");
+        }
         return list;
     }
 

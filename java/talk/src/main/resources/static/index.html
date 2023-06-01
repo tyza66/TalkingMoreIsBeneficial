@@ -11,14 +11,14 @@
     <script src="./js/eindex.js"></script>
     <script src="./js/axios.min.js"></script>
     <style>
-        *{
+        * {
             padding: 0;
             margin: 0;
         }
-        .header{
-            width: 100%;
-            height: 60px;
-            background-color: antiquewhite;
+
+        .title {
+            text-align: center;
+            line-height: 60px;
         }
     </style>
 </head>
@@ -26,16 +26,11 @@
 <body>
     <div id="app">
         <el-container>
-            <el-header><div class="header"></div></el-header>
+            <el-header>
+                <h2 class="title">多说有益</h2>
+            </el-header>
             <el-main>
-                <el-row>
-                    <el-col :span="12">
-                        <div class="grid-content bg-purple"></div>
-                    </el-col>
-                    <el-col :span="12">
-                        <div class="grid-content bg-purple-light"></div>
-                    </el-col>
-                </el-row>
+
             </el-main>
         </el-container>
     </div>
@@ -46,7 +41,15 @@
                 return {
 
                 }
-            }, methods: {
+            },
+            created: function () {
+                axios.get('./logined').then(function (res) {
+                    if (res.data.status != 200) {
+                        window.location.href = './login.html'
+                    }
+                })
+            },
+            methods: {
 
             }
         })

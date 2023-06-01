@@ -4,6 +4,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.json.JSON;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.tyza66.talk.pojo.User;
 import com.tyza66.talk.service.UserService;
 import org.noear.solon.annotation.*;
 import org.noear.solon.core.handle.Context;
@@ -14,10 +15,11 @@ public class UserController {
     private UserService userService;
     @Post
     @Mapping("/login")
-    public JSON login(Context ctx) {
+    public JSON login(@Body User user,Context ctx) {
         JSONObject end = JSONUtil.createObj();
-        String username = ctx.param("username");
-        String password = ctx.param("password");
+        //拿到post请求参数
+        String username = user.getUsername();
+        String password = user.getPassword();
         try {
             boolean login = userService.login(username, password);
             if (login) {
@@ -29,7 +31,7 @@ public class UserController {
                 end.set("msg","登录失败");
             }
         } catch (Exception e) {
-            end.set("status","500");
+            end.set("status","501");
             end.set("msg","登录失败");
         }
         return end;

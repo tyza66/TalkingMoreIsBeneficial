@@ -18,5 +18,18 @@
 
 - Python后端：Transformers、Fastapi、Vicorn
 - Java后端：Solon、Solon-web、Lombok、Httputils、Hutool、Wood、Sa-Token、Thymeleaf
+- 前端
+
+##### 端口
+
+- Python后端接口是8000
+- Java后端的端口是8080
+
+##### 本地复现
+
+1. 拉取代码
+2. 运行Python后端（拉取模型库可能需要较大内存和好的网络环境，一次拉取之后就可以脱机工作了）
+3. 运行Java后端
+4. 访问localhost:8080开始体验
 
 By：tyza66(洮羱芝闇)

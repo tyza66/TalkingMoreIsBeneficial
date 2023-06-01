@@ -170,24 +170,29 @@
         .active {
             background-color: aliceblue;
         }
-        .talkbody{
-            overflow:auto;
+
+        .talkbody {
+            overflow: auto;
         }
-        .talkbody .in{
+
+        .talkbody .in {
             width: 90%;
             margin: 0 auto;
         }
-        .infinite-list-item{
+
+        .infinite-list-item {
             width: 100%;
             margin-top: 5px;
             padding: 12px;
             border-radius: 10px;
             line-height: 1.5rem;
         }
-        .ai{
+
+        .ai {
             background-color: #3498db85;
         }
-        .user{
+
+        .user {
             background-color: #a0a2a385;
         }
     </style>
@@ -226,14 +231,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="talkbody">
-                                <ul class="infinite-list in"  style="overflow:auto">
-                                    <li class="infinite-list-item" v-for="(item,index) in talk" :class="item[0]">{{item[1]}}</li>
+                            <div class="talkbody" id="messages" ref="messages">
+                                <ul class="infinite-list in" style="overflow:auto">
+                                    <li class="infinite-list-item" v-for="(item,index) in talk" :class="item[0]">
+                                        {{item[1]}}</li>
                                 </ul>
                             </div>
                             <div class="text">
                                 <div class="input-container">
-                                    <input v-model="say" placeholder="在此输入内容，按回车发送" class="input-field" type="text" @keydown.enter="send()">
+                                    <input v-model="say" placeholder="在此输入内容，按回车发送" class="input-field" type="text"
+                                        @keydown.enter="send()">
                                     <label for="input-field" class="input-label">正在输入内容 按回车发送</label>
                                     <span class="input-highlight"></span>
                                 </div>
@@ -254,10 +261,11 @@
                     mode: "无上文模式",
                     mode1: "active",
                     mode2: "",
-                    mode3:"",
+                    mode3: "",
                     count: 0,
                     say: "",
-                    talk: [["ai","Hello, I am an AI chat robot based on the GPT2 language model. \"Speaking more is beneficial.\" You can chat with me through the input box below. I am produced by tyza66 and open-source on https://github.com/tyza66/TalkingMoreIsBeneficial . You can only communicate with me in English ."]],
+                    talk: [["ai", "Hello, I am an AI chat robot based on the GPT2 language model. \"Speaking more is beneficial.\" You can chat with me through the input box below. I am produced by tyza66 and open-source on https://github.com/tyza66/TalkingMoreIsBeneficial . You can only communicate with me in English ."]],
+                    context: false
                 }
             },
             created: function () {
@@ -274,34 +282,59 @@
                         this.mode1 = "active"
                         this.mode2 = ""
                         this.mode3 = ""
+                        this.context = false
+                        this.$message({
+                            message: '无上文模式',
+                            type: 'success'
+                        });
                     } else if (mode == "有上文模式") {
                         this.mode1 = ""
                         this.mode2 = "active"
                         this.mode3 = ""
+                        this.context = true
+                        this.$message({
+                            message: '有上文模式',
+                            type: 'success'
+                        });
                     } else if (mode == "回答增强模式") {
                         this.mode1 = ""
                         this.mode2 = ""
                         this.mode3 = "active"
+                        this.context = true
+                        this.$message({
+                            message: '回答增强的有上文模式',
+                            type: 'success'
+                        });
                     }
                 },
                 load() {
                     this.count += 2
-                },send(){
-                    if(this.say==""){
+                }, send() {
+                    if (this.say == "") {
                         return
                     }
-                    this.talk.push(["user",this.say])
-                    axios.get("./talkByNone?q="+this.say).then(function(res){
-                        if(res.data.status==200){
-                            this.talk.push(["ai",res.data.msg])
-                        }else if(res.data.status==201){
-                            this.talk.push(["ai","权限不足，请先登录"])
-                        }else{
-                            this.talk.push(["ai","服务器出错了，请稍后再试"])
+                    this.talk.push(["user", this.say])
+                    axios.get("./talkByNone?q=" + this.say).then(function (res) {
+                        if (res.data.status == 200) {
+                            this.talk.push(["ai", res.data.msg])
+                            this.messageButtom()
+                        } else if (res.data.status == 201) {
+                            this.talk.push(["ai", "权限不足，请先登录"])
+                            this.messageButtom()
+                        } else {
+                            this.talk.push(["ai", "服务器出错了，请稍后再试"])
+                            this.messageButtom()
                         }
                     }.bind(this))
-                    this.say=""
+                    this.say = ""
+                    this.messageButtom()
+                }, messageButtom() {
+                    this.$nextTick(() => {
+                        let scrollEl = this.$refs.messages;
+                        scrollEl.scrollTo({ top: scrollEl.scrollHeight, behavior: 'smooth' });
+                    });
                 }
+
             }
         })
     </script>

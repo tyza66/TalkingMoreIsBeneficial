@@ -81,6 +81,8 @@ public class TalkController {
             try {
                 String s = HttpUtils.http("http://localhost:8000/use?text=" + pre+" "+ text + "&q_text=" + q).get();
                 s = s.replace("\"", "");
+                s = s.replace("\\n","");
+                s = s.replace("\\","");
                 end.set("status", "200");
                 end.set("msg", s);
             } catch (IOException e) {

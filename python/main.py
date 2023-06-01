@@ -19,13 +19,13 @@ def qa(text: str = None, q_text: str = None):
 @app.get("/tg", summary='文本生成', tags=['文本相关'])
 def qa(text: str = None):
     result = textGenerator(text)
-    return result
+    return result[0]['generated_text']
 
 @app.get("/use", summary='问答并生成', tags=['文本相关'])
 def qa(text: str = None, q_text: str = None):
     result = question_answerer({'question': q_text, 'context': text})
     result = result['answer']
-    result = textGenerator(result)
+    result = textGenerator(result)[0]['generated_text']
     return result
 
 if __name__ == '__main__':

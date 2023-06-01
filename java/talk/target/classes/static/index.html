@@ -215,7 +215,7 @@
                                 <p>有上文模式</p>
                             </div>
                             <div class="tab" :class="mode3" @click="changeMode('回答增强模式')">
-                                <p>回答增强模式</p>
+                                <p>回答增强模式(慢)</p>
                             </div>
                         </div>
                     </el-col>
@@ -390,7 +390,7 @@
                         if (this.context) {
                                     window.sessionStorage.setItem("context", window.sessionStorage.getItem("context") + " " + this.say.replace('you', "my").replace('You', "I").replace('your', "my").replace('Your', "My").replace('yours', "mine").replace('Yours', "Mine"))
                                 }
-                        axios.post("./use", {
+                        axios.post("./talk2", {
                             "message": window.sessionStorage.getItem("context"),
                             "question": this.say,
                             "time": dataStr

@@ -3,6 +3,10 @@
 
 基于GPT2语言模型的Java+Python的AI聊天机器人。
 
+<details><summary>登录界面</summary>
+<img src="./效果/登录.png"/>
+</details>
+
 ##### 简述
 
 - 尝试使用新的Solon2.3.2生态搭建Web项目，连接操作数据库，调用python后端提供的API实现调用GPT2语言模型进行聊天
@@ -18,7 +22,7 @@
 
 - Python后端：Transformers、Fastapi、Vicorn
 - Java后端：Solon、Solon-web、Lombok、Httputils、Hutool、Wood、Sa-Token、Thymeleaf
-- 前端
+- 前端：Vue2.0、ElementUI、Axios
 
 ##### 端口
 

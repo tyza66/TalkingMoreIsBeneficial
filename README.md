@@ -6,6 +6,12 @@
 <details><summary>登录界面</summary>
 <img src="./效果/登录.png"/>
 </details>
+<details><summary>无上文聊天</summary>
+<img src="./效果/2.png"/>
+</details>
+<details><summary>有上文聊天</summary>
+<img src="./效果/上下文聊天.png."/>
+</details>
 
 ##### 简述
 

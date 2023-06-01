@@ -328,7 +328,7 @@
                             if (res.data.status == 200) {
                                 this.talk.push(["ai", res.data.msg])
                                 this.messageButtom()
-                                if (this.context) {
+                                if (this.context && now.indexOf("How") == -1&& now.indexOf("how") == -1 &&now.indexOf("Why")&& now.indexOf("why") == -1) {
                                     window.sessionStorage.setItem("context", window.sessionStorage.getItem("context") + " " + now.replace('you', "my").replace('You', "My").replace('your', "my").replace('Your', "My").replace('yours', "mine").replace('Yours', "Mine"))
                                 }
                             } else if (res.data.status == 201) {
@@ -353,7 +353,8 @@
                         var seconds = dd.getSeconds()
                         var dataStr = fullYear + "-" + this.convert(month + 1) + "-" + this.convert(date) + "-" + hours + "-" + this.convert(minutes) + "-" + this.convert(seconds);
                         this.talk.push(["user", this.say])
-                        if (this.context) {
+                        var now = this.say
+                        if (this.context && now.indexOf("How") == -1&& now.indexOf("how") == -1 &&now.indexOf("Why")&& now.indexOf("why") == -1) {
                                     window.sessionStorage.setItem("context", window.sessionStorage.getItem("context") + " " + this.say.replace('you', "my").replace('You', "I").replace('your', "my").replace('Your', "My").replace('yours', "mine").replace('Yours', "Mine"))
                                 }
                         axios.post("./talk", {
@@ -387,7 +388,8 @@
                         var seconds = dd.getSeconds()
                         var dataStr = fullYear + "-" + this.convert(month + 1) + "-" + this.convert(date) + "-" + hours + "-" + this.convert(minutes) + "-" + this.convert(seconds);
                         this.talk.push(["user", this.say])
-                        if (this.context) {
+                        var now = this.say
+                        if (this.context && now.indexOf("How") == -1&& now.indexOf("how") == -1 &&now.indexOf("Why")&& now.indexOf("why") == -1) {
                                     window.sessionStorage.setItem("context", window.sessionStorage.getItem("context") + " " + this.say.replace('you', "my").replace('You', "I").replace('your', "my").replace('Your', "My").replace('yours', "mine").replace('Yours', "Mine"))
                                 }
                         axios.post("./talk2", {
